@@ -66,30 +66,39 @@ public class Not extends StateFormula {
 	public String toString() {
 		return "!(" + inner.toString() + ")";
 	}
-
+	
+	/**
+	 * Returns a {@code StateFormula} for the existential normal form of <i>Not</i>.
+	 * @return {@code StateFormula} with translated CTL of <i>Not</i> in existential normal form.
+	 */
 	@Override
 	public StateFormula existentialNormalForm() {
 		return new Not(inner.existentialNormalForm());
 	}
+	
 
+	/**
+	 * Returns a {@code StateFormula} using the Duality Law is which is applied to 
+	 * transform the <i>Not</i> into its positive normal Form.
+	 * @return	The {@code StateFormula} with translated CTL of <i>Not</i> in positive normal form.
+	 */
 	@Override
 	public StateFormula positiveNormalForm() {
-		if(inner instanceof True){ //works
+		if(inner instanceof True){ 
 			return new False();
 		} if(inner instanceof False){
 			return new True();
-		} if(inner instanceof Not){ //works
+		} if(inner instanceof Not){ 
 			Not curr = (Not) inner;
 			return curr.inner.positiveNormalForm();
 		}
-		//further simplify
 		if(inner instanceof And){
 
 			And curr = (And) inner;
 			StateFormula left = new Not(curr.left.positiveNormalForm());
 			StateFormula right = new Not(curr.right.positiveNormalForm());
 
-			//further simplify as new not
+			
 			return new Or(left.positiveNormalForm(), right.positiveNormalForm());
 
 		} if(inner instanceof ForAll){
@@ -97,49 +106,41 @@ public class Not extends StateFormula {
 
 			if(curr.getInner() != null){
 
-				//Not(ForAll(Next))
+				
 				if(curr.getInner() instanceof Next){
 
 					Next last = (Next) curr.getInner();
 
 					StateFormula innerNot = new Not(last.inner.positiveNormalForm());
 
-					//since we add a not, check if simplified
+					
 					return new Exists(new Next(innerNot.positiveNormalForm()));
 
 
 				}
-				//Not(ForAll(Until))
+				
 				else if(curr.getInner() instanceof Until){
 
 					Until last = (Until) curr.getInner();
 					StateFormula left = last.left;
 					StateFormula right = last.right;
 
-					//left part of Until translated (saves computation)
+					
 					StateFormula leftTranslated = left.positiveNormalForm();
-
-					//right part of Until translated (saves computation)
 					StateFormula rightTranslated = right.positiveNormalForm();
 
-					//inner right part of both right and left
 					StateFormula innerRightPart = new Not(rightTranslated);
 
-					//since we add a not, check if further simplification
 					StateFormula innerRightPartTranslated = innerRightPart.positiveNormalForm();
-
-
+					
 					StateFormula leftInsideBracket = new And(leftTranslated, innerRightPartTranslated);
 
 					StateFormula leftInnerPart = new Not(leftTranslated);
 
-					//simplify because we are adding a Not
 					StateFormula leftInRightBracketTranslated = leftInnerPart.positiveNormalForm();
 
-					//combine left and right, to create AND
 					StateFormula rightInsideBracket = new And(leftInRightBracketTranslated, innerRightPartTranslated);
 
-					//combine left bracket and right bracket with Exists(Weak Until)
 					return new Exists(new WeakUntil(leftInsideBracket,rightInsideBracket));
 
 				}
@@ -155,44 +156,33 @@ public class Not extends StateFormula {
 
 					StateFormula innerNot = new Not(last.inner.positiveNormalForm());
 
-					//since we add a Not, simplify
 					StateFormula innerNotTranslated = innerNot.positiveNormalForm();
 
 					return new ForAll(new Next(innerNotTranslated));
 
 				}
-				// Negated Exists Until (!E (Φ U Ψ))
 				else if(curr.getInner() instanceof Until){
 
 					Until last = (Until) curr.getInner();
 					StateFormula left = last.left;
 					StateFormula right = last.right;
 
-					//left part of Until translated (saves computation)
 					StateFormula leftTranslated = left.positiveNormalForm();
 
-					//right part of Until translated (saves computation)
 					StateFormula rightTranslated = right.positiveNormalForm();
 
-					//inner right part of both right and left brackets
 					StateFormula innerRightPart = new Not(rightTranslated);
 
-					//since we add a not, check if further simplification
 					StateFormula innerRightPartTranslated = innerRightPart.positiveNormalForm();
 
-					//left bracket is now done (left of implies)
 					StateFormula leftInsideBracket = new And(leftTranslated, innerRightPartTranslated);
 
-					//left part of right bracket
 					StateFormula leftInnerPart = new Not(leftTranslated);
 
-					//simplify because we are adding a Not
 					StateFormula leftInRightBracketTranslated = leftInnerPart.positiveNormalForm();
 
-					//combine left and right, to create AND
 					StateFormula rightInsideBracket = new And(leftInRightBracketTranslated, innerRightPartTranslated);
 
-					//combine left bracket and right bracket with Exists(Weak Until)
 					return new ForAll(new WeakUntil(leftInsideBracket,rightInsideBracket));
 
 				}

@@ -73,12 +73,20 @@ public class Exists extends StateFormula {
 	public PathFormula getInner() {
 		return this.inner;
 	}
-
+	
+	/**
+	 * Returns a {@code StateFormula} for the existential normal form of <i>Exists</i>.
+	 * @return {@code StateFormula} with translated CTL of <i>Exists</i> in existential normal form.
+	 */
 	@Override
 	public StateFormula existentialNormalForm() {
 		return new Exists(inner.existentialNormalForm());
 	}
-
+	
+	/**
+	 * Returns a {@code StateFormula} for the positive normal form of <i>Exists</i>.
+	 * @return {@code StateFormula} with translated CTL of <i>Exists</i> in positive normal form.
+	 */
 	@Override
 	public StateFormula positiveNormalForm() {
 		return new Exists(inner.positiveNormalForm());

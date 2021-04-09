@@ -73,12 +73,22 @@ public class Implies extends StateFormula {
 	public String toString() {
 		return "(" + left.toString() + ")->(" + right.toString() + ")";
 	}
-
+	
+	/**
+	 * Returns a {@code StateFormula} for the existential normal form of <i>Implies</i> by taking the
+	 * existential normal form of the {@code left} and {@code right}.
+	 * @return StateFormula with translated CTL of <i>Implies</i>> in existential normal form.
+	 */
 	@Override
 	public StateFormula existentialNormalForm() {
 		return new Implies(left.existentialNormalForm(), right.existentialNormalForm());
 	}
-
+	
+	/**
+	 * Returns a {@code StateFormula} for the positive normal form of <i>Implies</i> by taking the
+	 * existential normal form of the {@code left} and {@code right}.
+	 * @return StateFormula with translated CTL of <i>Implies</i>> in positive normal form.
+	 */
 	@Override
 	public StateFormula positiveNormalForm() {
 		return new Implies(left.positiveNormalForm(), right.positiveNormalForm());

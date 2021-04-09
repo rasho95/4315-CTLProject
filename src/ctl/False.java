@@ -58,12 +58,20 @@ public class False extends StateFormula {
 	public String toString() {
 		return String.valueOf(formula);
 	}
-
+	
+	/**
+	 * Returns a {@code StateFormula} for the existential normal form of <i>False</i>.
+	 * @return {@code StateFormula} with translated CTL of <i>False</i> in existential normal form.
+	 */
 	@Override
 	public StateFormula existentialNormalForm() {
 		return this;
 	}
-
+	
+	/**
+	 * Returns a {@code StateFormula} for the positive normal form of <i>False</i>.
+	 * @return {@code StateFormula} with translated CTL of <i>False</i> in positive normal form.
+	 */
 	@Override
 	public StateFormula positiveNormalForm() {
 		return this;

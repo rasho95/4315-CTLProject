@@ -72,12 +72,22 @@ public class Until extends PathFormula {
 	public String toString() {
 		return "(" + left.toString() + ")U(" + right.toString() + ")"; 
 	}
-
+	
+	/**
+	 * Returns a {@code PathFormula} for the existential normal form of <i>Until</i> by taking the
+	 * existential normal form of the {@code left} and {@code right}.
+	 * @return {@code PathFormula} with translated CTL of <i>Until</i> in existential normal form.
+	 */
 	@Override
 	public PathFormula existentialNormalForm() {
 		return new Until(left.existentialNormalForm(), right.existentialNormalForm());
 	}
-
+	
+	/**
+	 * Returns a {@code PathFormula} for the positive normal form of <i>Until</i> by taking the
+	 * existential normal form of the {@code left} and {@code right}.
+	 * @return {@code PathFormula} with translated CTL of <i>Until</i> in positive normal form.
+	 */
 	@Override
 	public PathFormula positiveNormalForm() {
 		return new Until(left.positiveNormalForm(), right.positiveNormalForm());

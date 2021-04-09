@@ -73,12 +73,20 @@ public class Iff extends StateFormula {
 	public String toString() {
 		return "(" + left.toString() + ")<->(" + right.toString() + ")";
 	}
-
+	
+	/**
+	 * Returns a {@code StateFormula} for the existential normal form of <i>Iff</i>.
+	 * @return {@code StateFormula} with translated CTL of <i>Iff</i> in existential normal form.
+	 */
 	@Override
 	public StateFormula existentialNormalForm() {
 		return new Iff(left.existentialNormalForm(), right.existentialNormalForm());
 	}
-
+	
+	/**
+	 * Returns a {@code StateFormula} for the positive normal form of <i>Iff</i>.
+	 * @return {@code StateFormula} with translated CTL of <i>Iff</i> in positive normal form.
+	 */
 	@Override
 	public StateFormula positiveNormalForm() {
 		return new Iff(left.positiveNormalForm(), right.positiveNormalForm());

@@ -63,12 +63,24 @@ public class AtomicProposition extends StateFormula {
 		return this.formula;
 	}
 
-
+	/**
+	 * Returns the {@code StateFormula} of the existential normal form for the 
+	 * <i>AtomicProposition</i> formula.
+	 * @return	A StateFormula value representing the existential normal form for the 
+	 * 			<i>AtomicProposition</i>
+	 */
 	@Override
 	public StateFormula existentialNormalForm() {
 		return this;
 	}
-
+	
+	
+	/**
+	 * Returns the {@code StateFormula} of the positive normal form for the 
+	 * <i>AtomicProposition</i> formula.
+	 * @return	A StateFormula value representing the positive normal form for the 
+	 * 			<i>AtomicProposition</i>
+	 */
 	@Override
 	public StateFormula positiveNormalForm() {
 		return this;

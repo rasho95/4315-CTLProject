@@ -68,12 +68,22 @@ public class WeakUntil extends PathFormula {
         return "(" + left.toString() + ")W(" + right.toString() + ")";
     }
 
-
+    
+    /**
+	 * Returns a {@code PathFormula} for the existential normal form of <i>WeakUntil</i> by taking the
+	 * existential normal form of the {@code left} and {@code right}.
+	 * @return {@code PathFormula} with translated CTL of <i>WeakUntil</i> in existential normal form.
+	 */
     @Override
     public PathFormula existentialNormalForm() {
         return new WeakUntil(left.existentialNormalForm(), right.existentialNormalForm());
     }
-
+    
+    /**
+	 * Returns a {@code PathFormula} for the positive normal form of <i>WeakUntil</i> by taking the
+	 * existential normal form of the {@code left} and {@code right}.
+	 * @return {@code PathFormula} with translated CTL of <i>WeakUntil</i> in positive normal form.
+	 */
     @Override
     public PathFormula positiveNormalForm() {
         return new WeakUntil(left.positiveNormalForm(), right.positiveNormalForm());

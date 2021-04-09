@@ -52,12 +52,20 @@ public class Eventually extends PathFormula {
 	public String toString() {
 		return "F(" + inner.toString() + ")";
 	}
-
+	
+	/**
+	 * Returns a {@code PathFormula} for the existential normal form of <i>Eventually</i>.
+	 * @return PathFormula with translated CTL of <i>Eventually</i> in existential normal form.
+	 */
 	@Override
 	public PathFormula existentialNormalForm() {
 		return new Eventually(inner.existentialNormalForm());
 	}
-
+	
+	/**
+	 * Returns a {@code PathFormula} for the positive normal form of <i>Eventually</i>.
+	 * @return PathFormula with translated CTL of <i>Eventually</i> in positive normal form.
+	 */
 	@Override
 	public PathFormula positiveNormalForm() {
 		return new Eventually(inner.positiveNormalForm());

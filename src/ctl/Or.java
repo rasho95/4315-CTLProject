@@ -73,12 +73,22 @@ public class Or extends StateFormula {
 	public String toString() {
 		return "(" + left.toString() + ")||(" + right.toString() + ")";
 	}
-
+	
+	/**
+	 * Returns a {@code StateFormula} for the existential normal form of <i>Or</i> by taking the
+	 * existential normal form of the {@code left} and {@code right}.
+	 * @return {@code StateFormula} with translated CTL of <i>Or</i> in existential normal form.
+	 */
 	@Override
 	public StateFormula existentialNormalForm() {
 		return new Or(left.existentialNormalForm(), right.existentialNormalForm());
 	}
-
+	
+	/**
+	 * Returns a {@code StateFormula} for the positive normal form of <i>Or</i> by taking the
+	 * existential normal form of the {@code left} and {@code right}.
+	 * @return {@code StateFormula} with translated CTL of <i>Or</i> in positive normal form.
+	 */
 	@Override
 	public StateFormula positiveNormalForm() {
 		return new Or(left.positiveNormalForm(), right.positiveNormalForm());

@@ -18,13 +18,25 @@ import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
+
+/**
+ * 
+ * Class for testing the correctness of the functions for the 
+ * positive normal form
+ * 
+ */
+
 class PositiveNormalFormTest {
 
     public static final String p1 = "java.lang.error";
     public static final String p2 = "java.lang.exception";
     public static final String p3 = "java.lang.math";
 
-
+    /**
+   	 * Function to return a {@code Formula} from the inputed String in.
+   	 * @param	in	The depth of the random ENF translatable {@code StateFormula}.
+   	 * @return	Returns a {@code Formula}.
+   	 */
     private static Formula getFormula(String in) {
         CharStream input = CharStreams.fromString(in);
         CTLLexer lexer = new CTLLexer(input);
@@ -34,7 +46,13 @@ class PositiveNormalFormTest {
         Generator generator = new Generator();
         return generator.visit(tree);
     }
-
+    
+    /**
+     * 
+     * Test for asserting the inputed {@code Formula} "!!True" is correctly
+     * translated into its positive normal form
+     * 
+     */
     @Test
     void testTranslatedDoubleNegation() {
         String input1 = "!!True";
@@ -45,7 +63,13 @@ class PositiveNormalFormTest {
         Assertions.assertEquals("true", tester.toString());
     }
 
-
+    
+    /**
+     * 
+     * Test for asserting that random untranslatable {@code Formula} remains the same
+     * after being transformed into its positive normal form
+     * 
+     */
     @Test
     void testFormulaUnchanged() {
 
@@ -67,7 +91,12 @@ class PositiveNormalFormTest {
 
     }
 
-
+    /**
+     * 
+     * Test for asserting that random translatable PNF {@code Formula} is not the
+     * same as its positive normal form
+     * 
+     */
     @Test
     void testFormulaChanged() {
         for (int i = 0; i < 1000; i++) {
@@ -78,6 +107,12 @@ class PositiveNormalFormTest {
         }
     }
 
+    /**
+     * 
+     * Test for asserting the inputed {@code Formula} "! True" is correctly
+     * translated into its positive normal form
+     * 
+     */
     @Test
     void testTranslatedNegatedTrue() {
         String input1 = "! True";
@@ -87,7 +122,13 @@ class PositiveNormalFormTest {
 
         Assertions.assertEquals("false", tester.toString());
     }
-
+    
+    /**
+     * 
+     * Test for asserting the inputed {@code Formula} "! false" is correctly
+     * translated into its positive normal form
+     * 
+     */
     @Test
     void testTranslatedNegatedFalse() {
         String input1 = "! false";
@@ -98,7 +139,14 @@ class PositiveNormalFormTest {
         Assertions.assertEquals("true", tester.toString());
     }
 
-
+    
+    /**
+     * 
+     * Test for asserting the inputed {@code Formula} !!!(!(!(!(p1))) && !!!p2)
+     * where p1 = java.lang.error and p2 = java.lang.exception, is correctly
+     * translated into its positive normal form
+     * 
+     */
     @Test
     void testTranslatedNegatedAnd() {
         String input1 = "!!!(!(!(!(" + p1 + "))) && !!!" + p2 + ")";
@@ -110,7 +158,13 @@ class PositiveNormalFormTest {
         Formula expected = getFormula(expectedOutput);
         Assertions.assertEquals(expected, test);
     }
-
+    
+    /**
+     * 
+     * Test for asserting the inputed {@code Formula} !A X True
+     * is correctly translated into its positive normal form
+     * 
+     */
     @Test
     void testTranslatedNegatedForAllNext() {
         String input1 = "!A X True";
@@ -120,7 +174,13 @@ class PositiveNormalFormTest {
 
         Assertions.assertEquals("E(X(false))", tester.toString());
     }
-
+    
+    /**
+     * 
+     * Test for asserting the inputed {@code Formula} !E X True
+     * is correctly translated into its positive normal form
+     * 
+     */
     @Test
     void testTranslatedNegatedExistsNext() {
         String input1 = "!E X True";
@@ -131,7 +191,13 @@ class PositiveNormalFormTest {
         Assertions.assertEquals("A(X(false))", tester.toString());
     }
 
-    //to do
+    /**
+     * 
+     * Test for asserting the inputed {@code Formula} !E(p1Up1)True 
+     * where p1 = java.lang.error is correctly translated into its positive 
+     * normal form
+     * 
+     */
     @Test
     void testTranslatedNegatedExistsUntil() {
         String input1 = "!E(" + p1 + " U " + p1 + ")";
@@ -142,7 +208,13 @@ class PositiveNormalFormTest {
         Assertions.assertEquals("A(((" + p1 + ")&&(!(" + p1 + ")))W((!(" + p1 + "))&&(!(" + p1 + "))))", tester.toString());
     }
 
-    //to do
+    /**
+     * 
+     * Test for asserting the inputed {@code Formula} !A(p1Up1)
+     * where p1 = java.lang.error is correctly translated into its positive 
+     * normal form
+     * 
+     */
     @Test
     void testTranslatedNegatedForAllUntil() {
         String input1 = "!A(" + p1 + " U " + p1 + ")";
@@ -151,7 +223,13 @@ class PositiveNormalFormTest {
 
         Assertions.assertEquals("E(((" + p1 + ")&&(!(" + p1 + ")))W((!(" + p1 + "))&&(!(" + p1 + "))))", tester.toString());
     }
-
+    
+    /**
+     * 
+     * Test for checking a set of samples that contain Negation (!) Quantifiers are 
+     * equal too its correct positive normal form translation
+     * 
+     */
     @Test
     void testMultipleNegationsAtomic() {
 
@@ -175,7 +253,13 @@ class PositiveNormalFormTest {
             assertEquals(outputList.get(i), PositiveNormalForm.translate(getFormula(inputList.get(i))).toString());
         }
     }
-
+    
+    /**
+     * 
+     * Test for checking a set of samples are 
+     * equal too its correct positive normal form translation
+     * 
+     */
     @Test
     void testRandomSamples() {
         ArrayList<String> inputList = new ArrayList<String>();

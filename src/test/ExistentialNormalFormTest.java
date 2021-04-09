@@ -15,12 +15,24 @@ import parser.CTLParser;
 
 import java.util.ArrayList;
 
+/**
+ * 
+ * Class for testing the correctness of the functions for the 
+ * existential normal form
+ * 
+ */
+
 class ExistentialNormalFormTest {
 
     public static final String p1 = "java.lang.error";
     public static final String p2 = "java.lang.exception";
     public static final String p3 = "java.lang.object";
 
+    /**
+   	 * Function to return a {@code Formula} from the inputed String in.
+   	 * @param	in	The depth of the random ENF translatable {@code StateFormula}.
+   	 * @return	Returns a {@code Formula}.
+   	 */
     private static Formula getFormula(String in) {
         CharStream input = CharStreams.fromString(in);
         CTLLexer lexer = new CTLLexer(input);
@@ -30,7 +42,13 @@ class ExistentialNormalFormTest {
         Generator generator = new Generator();
         return generator.visit(tree);
     }
-
+    
+    /**
+     * 
+     * Test for asserting a random {@code Formula} remains unchanged after 
+     * being translated into its existential normal form
+     * 
+     */
     @Test
     void testFormulaUnchanged() {
 
@@ -41,7 +59,13 @@ class ExistentialNormalFormTest {
         }
 
     }
-
+    
+    /**
+     * 
+     * Test for asserting a random {@code Formula} is not equal after 
+     * being translated into its positive normal form
+     * 
+     */
     @Test
     void testFormulaChanged() {
         for (int i = 0; i < 10000; i++) {
@@ -52,14 +76,26 @@ class ExistentialNormalFormTest {
         }
     }
 
-
+    
+    /**
+     * 
+     * Test for checking a ForAllNext {@code Formula} is transformed 
+     * into its existential normal form
+     * 
+     */
     @Test
     void testTranslatedForAllNext() {
         String in = "AX(" + p1 + ")";
         Formula formula = getFormula(in);
         Formula g = ExistentialNormalForm.translate(formula);
     }
-
+    
+    /**
+     * 
+     * Test for checking a ForAllUntil {@code Formula} is transformed 
+     * into its existential normal form
+     * 
+     */
     @Test
     void testTranslatedForAllUntil() {
         String in = "AX(" + p1 + ")";
@@ -70,8 +106,12 @@ class ExistentialNormalFormTest {
         Formula gg = g.existentialNormalForm();
     }
 
+
     /**
-     * Method to test random samples that have ForAll Quantifier
+     * 
+     * Test for checking a set of samples that contain ForAll Quantifiers are 
+     * equal too its correct existential normal form translation
+     * 
      */
     @Test
     void testRandomSamples() {

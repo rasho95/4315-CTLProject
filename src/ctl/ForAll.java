@@ -73,7 +73,13 @@ public class ForAll extends StateFormula {
 	public PathFormula getInner() {
 		return this.inner;
 	}
-
+	
+	
+	/**
+	 * Returns a {@code StateFormula} using the Duality Law is which is applied to 
+	 * transform the <i>ForAll</i> into its existential normal Form.
+	 * @return	The {@code StateFormula} with translated CTL of <i>ForAll</i> in existential normal form.
+	 */
 	@Override
 	public StateFormula existentialNormalForm() {
 		if(inner instanceof Next){
@@ -87,25 +93,26 @@ public class ForAll extends StateFormula {
 
 			StateFormula leftTranslated = left.existentialNormalForm();
 			StateFormula rightTranslated = right.existentialNormalForm();
-			//create new part
+			
 			StateFormula leftInnerAnd = new And(new Not(leftTranslated), new Not(rightTranslated));
-			//inside of left bracket
+
 			Until leftUntil = new Until(new Not(rightTranslated), leftInnerAnd);
 
-			//left part of &&
 			StateFormula leftPart = new Not(new Exists(leftUntil));
 
-			//right part of and &&
 			StateFormula rightPart = new Not(new Exists(new Always(new Not(rightTranslated))));
 
-			//combine for output
 			StateFormula result = new And(leftPart.existentialNormalForm(),rightPart.existentialNormalForm());
 
 			return result;
 		}else
 		return new ForAll(inner.existentialNormalForm());
 	}
-
+	
+	/**
+	 * Returns a {@code StateFormula} for the positive normal form of <i>ForAll</i>
+	 * @return {@code StateFormula} with translated CTL of <i>ForAll</i> in positive normal form.
+	 */
 	@Override
 	public StateFormula positiveNormalForm() {
 		return new ForAll(inner.positiveNormalForm());

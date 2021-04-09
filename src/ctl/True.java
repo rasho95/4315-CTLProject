@@ -60,12 +60,19 @@ public class True extends StateFormula {
 	}
 
 
-
+	/**
+	 * Returns a {@code StateFormula} for the existential normal form of <i>True</i>.
+	 * @return {@code StateFormula} with translated CTL of <i>True</i> in existential normal form.
+	 */
 	@Override
 	public StateFormula existentialNormalForm() {
 		return this;
 	}
-
+	
+	/**
+	 * Returns a {@code StateFormula} for the positive normal form of <i>True</i>.
+	 * @return {@code StateFormula} with translated CTL of <i>True</i> in positive normal form.
+	 */
 	@Override
 	public StateFormula positiveNormalForm() {
 		return this;
