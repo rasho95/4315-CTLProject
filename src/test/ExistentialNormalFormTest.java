@@ -15,6 +15,8 @@ import parser.CTLParser;
 
 import java.util.ArrayList;
 
+import static org.junit.Assert.assertEquals;
+
 /**
  * 
  * Class for testing the correctness of the functions for the 
@@ -69,8 +71,8 @@ class ExistentialNormalFormTest {
     @Test
     void testFormulaChanged() {
         for (int i = 0; i < 10000; i++) {
-            Formula generated = RandomFormula.translatablePNFRandomFormula(10);
-            Formula translated = generated.positiveNormalForm();
+            Formula generated = RandomFormula.translatableENFRandomFormula(10);
+            Formula translated = generated.existentialNormalForm();
             boolean isSame = translated.toString().equals(generated.toString());
             Assertions.assertFalse(isSame);
         }
@@ -88,6 +90,9 @@ class ExistentialNormalFormTest {
         String in = "AX(" + p1 + ")";
         Formula formula = getFormula(in);
         Formula g = ExistentialNormalForm.translate(formula);
+        String output = "!(E(X(!(java.lang.error))))";
+
+        assertEquals(g.toString(),output);
     }
     
     /**
@@ -102,8 +107,10 @@ class ExistentialNormalFormTest {
         String in1 = "A (" + in + "U " + in + ")";
         Formula formula = getFormula(in1);
         Formula g = ExistentialNormalForm.translate(formula);
+        Formula transformed = ExistentialNormalForm.translate(g);
+        String expectedOutput = "(!(E((!(!(E(X(!(java.lang.error))))))U((!(!(E(X(!(java.lang.error))))))&&(!(!(E(X(!(java.lang.error))))))))))&&(!(E(G(!(!(E(X(!(java.lang.error)))))))))";
 
-        Formula gg = g.existentialNormalForm();
+        assertEquals(transformed.toString(), expectedOutput);
     }
 
 

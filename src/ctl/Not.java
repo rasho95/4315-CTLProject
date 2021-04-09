@@ -1,7 +1,5 @@
 package ctl;
 
-import javax.swing.plaf.nimbus.State;
-
 /**
  * 
  * This class represents a negation of a CTL state formula.

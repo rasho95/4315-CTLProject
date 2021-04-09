@@ -47,21 +47,7 @@ class PositiveNormalFormTest {
         return generator.visit(tree);
     }
     
-    /**
-     * 
-     * Test for asserting the inputed {@code Formula} "!!True" is correctly
-     * translated into its positive normal form
-     * 
-     */
-    @Test
-    void testTranslatedDoubleNegation() {
-        String input1 = "!!True";
-        Formula formula1 = getFormula(input1);
 
-        Formula tester = PositiveNormalForm.translate(formula1);
-
-        Assertions.assertEquals("true", tester.toString());
-    }
 
     
     /**
@@ -106,6 +92,25 @@ class PositiveNormalFormTest {
             assertFalse(isSame);
         }
     }
+
+
+
+    /**
+     *
+     * Test for asserting the inputed {@code Formula} "!!True" is correctly
+     * translated into its positive normal form
+     *
+     */
+    @Test
+    void testTranslatedDoubleNegation() {
+        String input1 = "!!True";
+        Formula formula1 = getFormula(input1);
+
+        Formula tester = PositiveNormalForm.translate(formula1);
+
+        Assertions.assertEquals("true", tester.toString());
+    }
+
 
     /**
      * 
@@ -227,7 +232,7 @@ class PositiveNormalFormTest {
     /**
      * 
      * Test for checking a set of samples that contain Negation (!) Quantifiers are 
-     * equal too its correct positive normal form translation
+     * equal to its correct positive normal form translation
      * 
      */
     @Test
@@ -257,7 +262,7 @@ class PositiveNormalFormTest {
     /**
      * 
      * Test for checking a set of samples are 
-     * equal too its correct positive normal form translation
+     * equal to its correct positive normal form translation
      * 
      */
     @Test
@@ -265,11 +270,17 @@ class PositiveNormalFormTest {
         ArrayList<String> inputList = new ArrayList<String>();
         inputList.add("!EX(" + p1 + "&&" + p2 + ")");
         inputList.add("(E(" + p3 + " U " + p1 + ") && !true)");
-
+        inputList.add("EX!true");
+        inputList.add("!" + p1 + "||!" + p2);
+        inputList.add("A(!true U !" + p1+ ")");
 
         ArrayList<String> outputList = new ArrayList<String>();
         outputList.add("A(X((!(" + p1 + "))||(!(" + p2 + "))))");
         outputList.add("(E((" + p3 + ")U(" + p1 + ")))&&(false)");
+        outputList.add("E(X(false))");
+        outputList.add("(!(java.lang.error))||(!(java.lang.exception))");
+        outputList.add("A((false)U(!(java.lang.error)))");
+
 
         for (int i = 0; i < inputList.size(); i++) {
             Formula formula = getFormula(inputList.get(i));

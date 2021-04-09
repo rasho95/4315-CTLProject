@@ -12,7 +12,6 @@ import java.util.Random;
 
 public class RandomFormula {
 
-    //Generate million cases, make sure unchanged (without ForAll)
 	
 	/**
 	 * Generate a random untranslatable {@code Formula} of user inputed depth.

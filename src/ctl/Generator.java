@@ -1,24 +1,7 @@
 package ctl;
 
 import parser.CTLBaseVisitor;
-import parser.CTLParser.AndContext;
-import parser.CTLParser.AtomicPropositionContext;
-import parser.CTLParser.BracketContext;
-import parser.CTLParser.ExistsAlwaysContext;
-import parser.CTLParser.ExistsEventuallyContext;
-import parser.CTLParser.ExistsNextContext;
-import parser.CTLParser.ExistsUntilContext;
-import parser.CTLParser.FalseContext;
-import parser.CTLParser.ForAllAlwaysContext;
-import parser.CTLParser.ForAllEventuallyContext;
-import parser.CTLParser.ForAllNextContext;
-import parser.CTLParser.ForAllUntilContext;
-import parser.CTLParser.IffContext;
-import parser.CTLParser.ImpliesContext;
-import parser.CTLParser.NotContext;
-import parser.CTLParser.OrContext;
-import parser.CTLParser.RootContext;
-import parser.CTLParser.TrueContext;
+import parser.CTLParser.*;
 
 /**
  * 
